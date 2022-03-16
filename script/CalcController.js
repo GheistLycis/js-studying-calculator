@@ -120,15 +120,12 @@ class Calculator{
     }
 
     getLastNumber(){
-        let lastNum;
+        let lastNum = 0;
         for (let i = this._operation.length-1; i >= 0; i--){
             if(!isNaN(this._operation[i])){
                 lastNum = this._operation[i];
                 break;
             }
-        }
-        if (!lastNum){
-            lastNum = 0;
         }
         return lastNum;
     }
