@@ -1,13 +1,21 @@
 class Calculator{
     constructor(){
+        this.initCalc();
         this._operation = [];
+        this._displayValue = document.querySelector('#display');
+
+    }
+
+    initCalc(){
+        this.buttonsEvents();
+        this.updateDisplay();
     }
 
     buttonsEvents(){
         let buttons = document.querySelectorAll('#calculadora > button');
         buttons.forEach(button => {
             this.addMultiEventListener(button, 'click drag', () => {
-                this.execButton(button.innerText);
+                this.execButton(button.innerHTML);
             });
             this.addMultiEventListener(button, 'mouseover mousedown mouseup', () => {
                 button.style.cursor = 'pointer';
@@ -52,7 +60,7 @@ class Calculator{
         //LAST OP WASN'T A NUMBER:
         if (isNaN(this.getLastOperation())){
             //LAST OP WAS AN OPERATOR:
-            if (this.isOperator()){
+            if (this.isLastAnOperator()){
                 this._operation.push(value.toString());
             }
             //THIS IS THE FIRST OP:
@@ -66,25 +74,34 @@ class Calculator{
 
     addOperator(value){
         //CONVERT HTML OPERATOR TO KEYBOARD OPERATOR (EG: X -> *)
-        
-
+        let operator = value;
+        switch (operator){
+            case '+':
+                break;
+            case '-':
+                break;
+            case 'X':
+                operator = '*';
+                break;
+            case '÷':
+                operator = '/';
+                break;
+        };
         //LAST OP WAS A NUMBER:
         if (!isNaN(this.getLastOperation())){
-            this._operation.push(value.toString());
+            this._operation.push(operator.toString());
         }
         //LAST OP WASN'T A NUMBER:
         if (isNaN(this.getLastOperation())){
             //LAST OP WAS AN OPERATOR:
-            if (this.isOperator()){
-                this._operation[this._operation.length-1] = value.toString();
+            if (this.isLastAnOperator()){
+                this._operation[this._operation.length-1] = operator.toString();
             }
             //THIS IS THE FIRST OP:
             else{
                 this._operation = this._operation;
             }
         }
-
-        this.updateDisplay();
     }
 
     getLastOperation(){
@@ -92,13 +109,25 @@ class Calculator{
         return lastOp;
     }
 
-    isOperator(){
+    isLastAnOperator(){
         let operations = ['+', '-', '*', '/'];
         let lastOp = this.getLastOperation();
         return (operations.indexOf(lastOp) > -1);
     }
 
     updateDisplay(){
+        this._displayValue.innerHTML = this.getLastNumber();
+    }
+
+    getLastNumber(){
+        let lastNum;
+        for (let i = this._operation.length-1; i >= 0; i--){
+            if(!isNaN(this._operation[i])){
+                lastNum = this._operation[i];
+                break;
+            }
+        };
+        return lastNum;
 
     }
 }
