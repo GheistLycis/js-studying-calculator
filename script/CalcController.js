@@ -2,7 +2,7 @@ class Calculator{
     constructor(){
         this.initCalc();
         this._operation = [];
-        this._displayValue.innerHTML = document.querySelector('#display');
+        this._displayValue = document.querySelector('#display');
 
     }
 
@@ -116,12 +116,12 @@ class Calculator{
     }
 
     updateDisplay(){
-        this._displayValue = this.getLastNumber();
+        this._displayValue.innerHTML = this.getLastNumber();
     }
 
     getLastNumber(){
-        let lastNum = 0;
-        if (this._operation.length-1 > -1){
+        let lastNum = '0';
+        if (this._operation.length != 0){
             for (let i = this._operation.length-1; i >= 0; i--){
                 if(!isNaN(this._operation[i])){
                     lastNum = this._operation[i];
