@@ -2,7 +2,7 @@ class Calculator{
     constructor(){
         this.initCalc();
         this._operation = [];
-        this._displayValue = document.querySelector('#display').value;
+        this._displayValue = document.querySelector('#display');
 
     }
 
@@ -116,7 +116,7 @@ class Calculator{
     }
 
     updateDisplay(){
-        this._displayValue = this.getLastNumber();
+        this._displayValue.value = this.getLastNumber();
     }
 
     getLastNumber(){
